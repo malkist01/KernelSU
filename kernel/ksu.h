@@ -1,8 +1,8 @@
 #ifndef __KSU_H_KSU
 #define __KSU_H_KSU
 
-#include <linux/types.h>
-#include <linux/workqueue.h>
+#include "linux/types.h"
+#include "linux/workqueue.h"
 
 #define KERNEL_SU_VERSION KSU_VERSION
 #define KERNEL_SU_OPTION 0xDEADBEEF
@@ -21,12 +21,6 @@
 #define CMD_SET_APP_PROFILE 11
 #define CMD_UID_GRANTED_ROOT 12
 #define CMD_UID_SHOULD_UMOUNT 13
-#define CMD_IS_SU_ENABLED 14
-#define CMD_ENABLE_SU 15
-#define CMD_GET_MANAGER_UID 16
-
-#define CMD_ADD_TRY_UMOUNT 10001
-#define CMD_NUKE_EXT4_SYSFS 10002
 
 #define EVENT_POST_FS_DATA 1
 #define EVENT_BOOT_COMPLETED 2
