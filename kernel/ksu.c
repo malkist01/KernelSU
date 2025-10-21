@@ -1,13 +1,15 @@
-#include "linux/fs.h"
-#include "linux/module.h"
-#include "linux/workqueue.h"
+#include <linux/export.h>
+#include <linux/fs.h>
+#include <linux/kobject.h>
+#include <linux/module.h>
+#include <linux/version.h> /* LINUX_VERSION_CODE, KERNEL_VERSION macros */
+#include <linux/workqueue.h>
 
 #include "allowlist.h"
-#include "arch.h"
 #include "core_hook.h"
 #include "klog.h" // IWYU pragma: keep
 #include "ksu.h"
-#include "uid_observer.h"
+#include "throne_tracker.h"
 
 static struct workqueue_struct *ksu_workqueue;
 
@@ -16,6 +18,7 @@ bool ksu_queue_work(struct work_struct *work)
 	return queue_work(ksu_workqueue, work);
 }
 
+#ifdef KSU_USE_STRUCT_FILENAME
 extern int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,
 					void *argv, void *envp, int *flags);
 
@@ -29,9 +32,7 @@ int ksu_handle_execveat(int *fd, struct filename **filename_ptr, void *argv,
 	return ksu_handle_execveat_sucompat(fd, filename_ptr, argv, envp,
 					    flags);
 }
-
-extern void ksu_enable_sucompat();
-extern void ksu_enable_ksud();
+#endif // KSU_USE_STRUCT_FILENAME
 
 int __init kernelsu_init(void)
 {
@@ -51,14 +52,7 @@ int __init kernelsu_init(void)
 
 	ksu_allowlist_init();
 
-	ksu_uid_observer_init();
-
-#ifdef CONFIG_KPROBES
-	ksu_enable_sucompat();
-	ksu_enable_ksud();
-#else
-	pr_alert("KPROBES is disabled, KernelSU may not work, please check https://kernelsu.org/guide/how-to-integrate-for-non-gki.html");
-#endif
+	ksu_throne_tracker_init();
 
 	return 0;
 }
@@ -67,11 +61,10 @@ void kernelsu_exit(void)
 {
 	ksu_allowlist_exit();
 
-	ksu_uid_observer_exit();
+	ksu_throne_tracker_exit();
 
 	destroy_workqueue(ksu_workqueue);
 
-	ksu_core_exit();
 }
 
 module_init(kernelsu_init);
