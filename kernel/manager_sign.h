@@ -23,6 +23,26 @@
 #define EXPECTED_HASH_KOWX712                                                  \
 	"484fcba6e6c43b1fb09700633bf2fb4758f13cb0b2f4457b80d075084b26c588"
 
+// RapliVx/KernelSU
+#define EXPECTED_SIZE_MAMBOSU 0x384
+#define EXPECTED_HASH_MAMBOSU                                                  \
+	"a9462b8b98ea1ca7901b0cbdcebfaa35f0aa95e51b01d66e6b6d2c81b97746d8"
+
+// Enjoy/KernelSU
+#define EXPECTED_SIZE_ENJOY 0x3e6
+#define EXPECTED_HASH_ENJOY                                                  \
+	"79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"
+
+// KernelSU-Next/KernelSU-Next
+#define EXPECTED_SIZE_NEXT 0x3e6
+#define EXPECTED_HASH_NEXT                                                  \
+	"79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"
+
+// Enjoy/KernelSU
+#define EXPECTED_SIZE_NEXT 0x31c
+#define EXPECTED_HASH_NEXT                                                  \
+	"1ab6077099505a4f5ff851732d5d965a4908af7f60c871f23b4b3a58e80e6cd3"
+
 typedef struct {
 	u32 size;
 	const char *sha256;
