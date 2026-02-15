@@ -33,7 +33,7 @@
 #define EXPECTED_HASH_ENJOY                                                  \
 	"79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"
 
-// KernelSU-Next/KernelSU-Next
+// KernelSU-Next/KernelSU
 #define EXPECTED_SIZE_NEXT 0x3e6
 #define EXPECTED_HASH_NEXT                                                  \
 	"79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7"
