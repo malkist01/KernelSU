@@ -1,3 +1,9 @@
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/namei.h>
+#include <linux/susfs.h>
+#include "objsec.h"
+#endif // #ifdef CONFIG_KSU_SUSFS
+
 static int anon_ksu_release(struct inode *inode, struct file *filp)
 {
 	pr_info("ksu fd released\n");
