@@ -30,7 +30,11 @@ static inline void ksu_umount_mnt(const char *mnt, struct path *path, int flags)
 		pr_info("umount %s failed: %d\n", mnt, err);
 }
 
+#if !defined(CONFIG_KSU_SUSFS) || !defined(CONFIG_KSU_SUSFS_TRY_UMOUNT)
 static void try_umount(const char *mnt, int flags)
+#else
+void try_umount(const char *mnt, int flags)
+#endif
 {
 	struct path path;
 	int err = kern_path(mnt, 0, &path);
@@ -84,6 +88,7 @@ static inline int ksu_handle_umount(struct cred *new, const struct cred *old)
 		pr_info("handle umount ignore non zygote child: %d\n", current->pid);
 		return 0;
 	}
+#endif // #if defined(CONFIG_KSU_SUSFS) || !defined(CONFIG_KSU_SUSFS_TRY_UMOUNT)
 	// umount the target mnt
 	pr_info("handle umount for uid: %d, pid: %d\n", new_uid, current->pid);
 
@@ -101,6 +106,7 @@ static inline int ksu_handle_umount(struct cred *new, const struct cred *old)
 
 	return 0;
 }
+#endif // #if defined(CONFIG_KSU_SUSFS) || !defined(CONFIG_KSU_SUSFS_TRY_UMOUNT)
 
 void __init ksu_kernel_umount_init(void)
 {
